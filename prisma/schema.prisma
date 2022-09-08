@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  password   String
+  Credential Credential[]
+  SafeNote   SafeNote[]
+  Card       Card[]
+  Network    Network[]
+
+  @@map("users")
+}
+
+model Credential {
+  id       Int    @id @default(autoincrement())
+  title    String
+  username String
+  password String
+  url      String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int
+
+  @@unique([title, userId])
+  @@map("credentials")
+}
+
+model SafeNote {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  title  String
+  note   String
+  userId Int
+
+  @@unique([title, userId])
+  @@map("safeNotes")
+}
+
+model Card {
+  id             Int       @id @default(autoincrement())
+  user           User      @relation(fields: [userId], references: [id])
+  title          String
+  number         String
+  cardHolderName String
+  securityCode   String
+  expirationDate String
+  password       String
+  isVirtual      Boolean
+  type           cardTypes
+  userId         Int
+
+  @@unique([title, userId])
+  @@map("cards")
+}
+
+model Network {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id])
+  title    String
+  network  String
+  password String
+  userId   Int
+
+  @@map("networks")
+}
+
+enum cardTypes {
+  credit
+  debit
+  both
+}
