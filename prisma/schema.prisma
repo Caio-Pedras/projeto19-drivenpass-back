@@ -18,6 +18,7 @@ model User {
   SafeNote   SafeNote[]
   Card       Card[]
   Network    Network[]
+  Document   Document[]
 
   @@map("users")
 }
@@ -74,8 +75,27 @@ model Network {
   @@map("networks")
 }
 
+model Document {
+  id             Int           @id @default(autoincrement())
+  user           User          @relation(fields: [userId], references: [id])
+  title          String
+  type           documemtTypes
+  name           String
+  issueDate      String
+  registerNumber String
+  issuingBody    String
+  userId         Int
+
+  @@map("document")
+}
+
 enum cardTypes {
   credit
   debit
   both
+}
+
+enum documemtTypes {
+  RG
+  CNH
 }

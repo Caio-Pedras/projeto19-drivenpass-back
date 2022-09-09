@@ -41,7 +41,7 @@ export async function getNetworkByIdService(id: number) {
 export async function deleteNetworkService(id: number, userId: number) {
   const network = await getNetworkById(id);
   if (!network) {
-    throw notFoundError("Safe Note not found");
+    throw notFoundError("Document not found");
   }
   if (network.userId !== userId) {
     throw unauthorizedError("Unauthorized operation");
