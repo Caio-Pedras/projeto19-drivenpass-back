@@ -1,5 +1,5 @@
 import { prisma } from "./../config/database.js";
-import { createDocumentData } from "../services/DocumentService.js";
+import { createDocumentData } from "../services/documentService.js";
 
 export async function findDocumentByTitle(title: string, userId: number) {
   return prisma.document.findFirst({ where: { title, userId } });

@@ -7,13 +7,13 @@ import {
 } from "../controllers/documentController.js";
 import { schemaValidator } from "../middlewares/validateSchema.js";
 import { tokenValidator } from "../middlewares/validateToken.js";
-import DocumentSchema from "../schemas/documentSchema.js";
+import documentSchema from "../schemas/documentSchema.js";
 
 const documentRouter = Router();
 documentRouter.post(
   "/documents",
   tokenValidator,
-  schemaValidator(DocumentSchema),
+  schemaValidator(documentSchema),
   createDocument
 );
 documentRouter.get("/documents", tokenValidator, getDocuments);
